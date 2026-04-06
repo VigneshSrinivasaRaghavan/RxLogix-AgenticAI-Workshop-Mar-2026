@@ -1,9 +1,10 @@
 import sys
 from pathlib import Path
-from pyexpat.errors import messages
 from typing import List, Dict
-from src.core import chat, pick_requirement, parse_json_safely
+from src.core import chat, pick_requirement, parse_json_safely, get_logger
 import pandas as pd
+
+logger = get_logger("TestCaseAgent")
 
 # Project Paths
 ROOT = Path(__file__).resolve().parents[2]
@@ -66,23 +67,23 @@ def save_as_csv(test_cases: List[Dict], csv_file: Path) -> None:
 
 def main():
     # 1. Pick requirement file
-    print("Test Case Generator Agent Starting...")
-    print("Picking requirement file...")
+    logger.info("Test Case Generator Agent Starting...")
+    logger.debug("Picking requirement file...")
     file_arg = sys.argv[1] if len(sys.argv) > 1 else None
     req_file = pick_requirement(file_arg, REQ_DIR)
     requirement = req_file.read_text(encoding="utf-8")
-    print(f"Requirement file: {req_file}")
+    logger.info(f"Requirement file: {req_file}")
     
     # Build messages for LLM
-    print("Generating test cases...")
+    logger.debug("Generating test cases...")
     messages=[
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": requirement}
     ]
     
-    print("Sending messages to LLM...")
+    logger.info("Sending messages to LLM...")
     response = chat(messages)
-    print("Test cases generated successfully!")
+    logger.info("Test cases generated successfully!")
     
     raw_file = OUT_DIR / "raw_output.txt"
     
@@ -92,7 +93,7 @@ def main():
     csv_file = OUT_DIR / "test_cases.csv"
     save_as_csv(testcases, csv_file)
     
-    print(f"Test cases saved to {csv_file}")
+    logger.info(f"Test cases saved to {csv_file}")
     
 if __name__ == "__main__":
     main()
