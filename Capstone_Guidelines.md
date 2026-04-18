@@ -22,22 +22,6 @@ This is not just a coding exercise. This is a real-world automation migration sc
 
 ---
 
-## Team Structure
-
-- Teams of **4–5 members**
-- Every team member is expected to contribute
-- Assign roles within your team (suggested):
-
-| Role | Responsibility |
-|---|---|
-| **Architect** | Designs the skill file structure and phase flow |
-| **Excel/Input Lead** | Prepares the JIRA story + UFT Excel inputs |
-| **Script Lead** | Owns the Playwright POM script generation |
-| **QA/Verification Lead** | Validates Phase 2 manual browser execution |
-| **Report Lead** | Owns the healing report output and demo presentation |
-
----
-
 ## What You Are Building
 
 You will create a **Cursor Skill File** (a `.md` rule file placed inside `.cursor/rules/`) that instructs the Cursor Agent to autonomously perform the following pipeline:
@@ -265,12 +249,10 @@ Teams will be evaluated on the following:
 ## Rules & Constraints
 
 1. **Do not share your skill file with other teams** during the session
-2. The agent must read inputs dynamically — no hardcoding of app URLs or test data inside the skill file
-3. **Excel always takes priority** over the JIRA story in case of any conflict
-4. Always prefer `data-test` attributes for locators where available
-5. Self-healing must fix **one locator at a time** — no batch fixes
-6. Maximum **3 iterations** per broken locator before escalating to human review
-7. Every run must produce a **new timestamped report** — never overwrite an existing one
+2. **Excel always takes priority** over the JIRA story in case of any conflict
+3. Self-healing must fix **one locator at a time** — no batch fixes
+4. Maximum **3 iterations** per broken locator before escalating to human review
+5. Every run must produce a **new timestamped report** — never overwrite an existing one
 
 ---
 
@@ -279,7 +261,6 @@ Teams will be evaluated on the following:
 - ✅ **Start with Phase 0** — a clean input parsing phase makes every other phase easier
 - ✅ **Be explicit in your skill file** — the more precise your instructions, the more reliably the agent follows them
 - ✅ **Test your Excel manually first** — walk through the steps yourself before handing it to the agent
-- ✅ **Use `data-test` attributes** wherever the app provides them — they are far more stable than class or position-based selectors
 - ✅ **Keep the self-healing guardrails strict** — a low-confidence fix is worse than no fix
 - ✅ **Document your design decisions** — the panel will ask why you made certain choices
 
